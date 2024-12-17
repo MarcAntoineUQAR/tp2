@@ -10,6 +10,7 @@ class User(models.Model):
     
     class Meta:
         abstract = True
+        
 class Client(User):
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
@@ -44,7 +45,7 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"RDV: {self.client.username} avec {self.mecanicien.username} - {self.date}"
-    
+  
 class Bill(models.Model):
     id = models.AutoField(primary_key=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="factures")
