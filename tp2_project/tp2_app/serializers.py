@@ -4,12 +4,12 @@ from .models import Client, Mechanic, Vehicle, Appointment, Bill
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
-        fields = ['id', 'username', 'firstname', 'lastname', 'email', 'phone_number', 'address']
+        fields = ['id', 'username', 'firstname', 'lastname', 'email', 'password', 'phone_number', 'address']
 
 class MechanicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mechanic
-        fields = ['id', 'username', 'firstname', 'lastname', 'email', 'salary']
+        fields = ['id', 'username', 'firstname', 'lastname', 'email', 'password', 'salary']
 
 class VehicleSerializer(serializers.ModelSerializer):
     client = ClientSerializer(read_only=True)
