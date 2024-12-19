@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .card {
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    .entete{
+        border-radius: 9px 9px 0 0;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: black 1px solid;
+
+    }
+</style>
+
+<div class="card border border-2 border-dark">
+    <div class="entete text-center bg-primary text-white">
+        <h3>Welcome Back!</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+    </div>
+    <div class="card-footer text-muted text-center">
+        <small>Don't have an account? <a href="/register/">Register here</a></small>
+    </div>
+</div>
+
+{% endblock %}
