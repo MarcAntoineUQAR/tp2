@@ -2,12 +2,20 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
+    <title>{% block title %}My Django Site{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" />
-    <title>{% block title %} {% endblock %}</title>
-  </head>
-  <body>
-    {% block content %} {% endblock %}
-  </body>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            min-height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
 </html>
