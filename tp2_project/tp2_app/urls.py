@@ -26,7 +26,7 @@ urlpatterns = [
     path('', lobby, name="home"),
     path('lobby/', lobby, name="lobby"),
 
-    path('login/',login, name="login"),
+    path('login/', login, name='login'),
     path('register/', register, name='register'),
 
     path('statistics/',statistics, name="statistics"),

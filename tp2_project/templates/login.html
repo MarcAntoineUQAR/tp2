@@ -22,6 +22,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
     }
+
     .entete{
         border-radius: 9px 9px 0 0;
         height: 50px;
@@ -29,7 +30,6 @@
         align-items: center;
         justify-content: center;
         border-bottom: black 1px solid;
-
     }
 </style>
 
@@ -55,5 +55,12 @@
         <small>Don't have an account? <a href="/tp2_app/register/">Register here</a></small>
     </div>
 </div>
+
+<!-- Display the message as an alert -->
+{% if message %}
+    <script type="text/javascript">
+        alert("{{ message }}");
+    </script>
+{% endif %}
 
 {% endblock %}
