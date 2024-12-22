@@ -9,9 +9,10 @@ from ..serializers import BillSerializer
 class BillDetail(APIView):
     @swagger_auto_schema(
         tags=['Bill'],
-        responses={200: BillSerializer},
-        operation_summary="Get Bill By ID",
-        )
+        responses={200: BillSerializer, 404: "Bill not found"},
+        operation_summary="Get bill details",
+        operation_description="Fetch bill details by ID. 404 if not found."
+    )
     def get(self, request, pk, format=None):
         try:
             bill = Bill.objects.get(pk=pk)
@@ -23,9 +24,10 @@ class BillDetail(APIView):
     @swagger_auto_schema(
         tags=['Bill'],
         request_body=BillSerializer,
-        responses={200: BillSerializer},
-        operation_summary="Update Bill",
-        )
+        responses={200: BillSerializer, 400: "Invalid data", 404: "Bill not found"},
+        operation_summary="Update an existing bill",
+        operation_description="Update a bill. 404 if not found."
+    )
     def put(self, request, pk, format=None):
         try:
             bill = Bill.objects.get(pk=pk)
@@ -40,9 +42,10 @@ class BillDetail(APIView):
     @swagger_auto_schema(
         tags=['Bill'],
         request_body=BillSerializer,
-        responses={200: BillSerializer},
-        operation_summary="Partial Update Bill",
-        )
+        responses={200: BillSerializer, 400: "Invalid data", 404: "Bill not found"},
+        operation_summary="Partially update a bill",
+        operation_description="Update selected fields of a bill. 404 if not found."
+    )
     def patch(self, request, pk, format=None):
         try:
             bill = Bill.objects.get(pk=pk)
@@ -56,9 +59,10 @@ class BillDetail(APIView):
 
     @swagger_auto_schema(
         tags=['Bill'], 
-        responses={204: 'No Content'},
-        operation_summary="Delete Bill",
-        )
+        responses={204: "No Content", 404: "Bill not found"},
+        operation_summary="Delete a bill",
+        operation_description="Delete a bill by ID. 404 if not found."
+    )
     def delete(self, request, pk, format=None):
         try:
             bill = Bill.objects.get(pk=pk)
@@ -67,29 +71,31 @@ class BillDetail(APIView):
         bill.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class BillCreate(APIView):
     @swagger_auto_schema(
         tags=['Bill'],
         request_body=BillSerializer,
         responses={201: BillSerializer, 400: "Invalid data"},
-        operation_summary="Create Bill",
+        operation_summary="Create a new bill",
+        operation_description="Create a bill. Provide all required fields."
     )
     def post(self, request, format=None):
         data = request.data
-        if 'password' in data:
-            data['password'] = make_password(data['password'])
         serializer = BillSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class BillList(APIView):
     @swagger_auto_schema(
         tags=['Bill'], 
         responses={200: BillSerializer(many=True)},
-        operation_summary="Get All Bills",
-        )
+        operation_summary="Get all bills",
+        operation_description="Retrieve a list of all bills."
+    )
     def get(self, request, format=None):
         bills = Bill.objects.all()
         serializer = BillSerializer(bills, many=True)

@@ -9,9 +9,10 @@ from ..serializers import MechanicSerializer
 class MechanicDetail(APIView):
     @swagger_auto_schema(
         tags=['Mechanic'],
-        responses={200: MechanicSerializer},
-        operation_summary="Get Mechanic By ID",
-        )
+        responses={200: MechanicSerializer, 404: "Mechanic not found"},
+        operation_summary="Get mechanic details",
+        operation_description="Fetch mechanic details by ID. Returns 404 if mechanic not found."
+    )
     def get(self, request, pk, format=None):
         try:
             mechanic = Mechanic.objects.get(pk=pk)
@@ -23,9 +24,10 @@ class MechanicDetail(APIView):
     @swagger_auto_schema(
         tags=['Mechanic'],
         request_body=MechanicSerializer,
-        responses={200: MechanicSerializer},
-        operation_summary="Update Mechanic",
-        )
+        responses={200: MechanicSerializer, 404: "Mechanic not found", 400: "Invalid data"},
+        operation_summary="Update mechanic details",
+        operation_description="Update an existing mechanic by ID. Returns 404 if mechanic not found."
+    )
     def put(self, request, pk, format=None):
         try:
             mechanic = Mechanic.objects.get(pk=pk)
@@ -40,9 +42,10 @@ class MechanicDetail(APIView):
     @swagger_auto_schema(
         tags=['Mechanic'],
         request_body=MechanicSerializer,
-        responses={200: MechanicSerializer},
-        operation_summary="Partial Update Mechanic",
-        )
+        responses={200: MechanicSerializer, 404: "Mechanic not found", 400: "Invalid data"},
+        operation_summary="Partially update mechanic details",
+        operation_description="Partially update mechanic details by ID. Returns 404 if mechanic not found."
+    )
     def patch(self, request, pk, format=None):
         try:
             mechanic = Mechanic.objects.get(pk=pk)
@@ -56,9 +59,10 @@ class MechanicDetail(APIView):
 
     @swagger_auto_schema(
         tags=['Mechanic'], 
-        responses={204: 'No Content'},
-        operation_summary="Delete Mechanic",
-        )
+        responses={204: "No Content", 404: "Mechanic not found"},
+        operation_summary="Delete mechanic",
+        operation_description="Delete a mechanic by ID. Returns 404 if mechanic not found."
+    )
     def delete(self, request, pk, format=None):
         try:
             mechanic = Mechanic.objects.get(pk=pk)
@@ -67,12 +71,14 @@ class MechanicDetail(APIView):
         mechanic.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class MechanicCreate(APIView):
     @swagger_auto_schema(
         tags=['Mechanic'],
         request_body=MechanicSerializer,
         responses={201: MechanicSerializer, 400: "Invalid data"},
-        operation_summary="Create Mechanic",
+        operation_summary="Create a new mechanic",
+        operation_description="Create a new mechanic with the necessary details."
     )
     def post(self, request, format=None):
         data = request.data
@@ -84,12 +90,14 @@ class MechanicCreate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class MechanicList(APIView):
     @swagger_auto_schema(
         tags=['Mechanic'], 
         responses={200: MechanicSerializer(many=True)},
-        operation_summary="Get All Mechanics",
-        )
+        operation_summary="Get all mechanics",
+        operation_description="Retrieve a list of all mechanics."
+    )
     def get(self, request, format=None):
         mechanics = Mechanic.objects.all()
         serializer = MechanicSerializer(mechanics, many=True)
