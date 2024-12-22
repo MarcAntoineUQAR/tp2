@@ -9,8 +9,8 @@ def register(request):
         role = request.POST.get('role')
         data = {
             "username": request.POST.get('username'),
-            "firstname": request.POST.get('firstname'),
-            "lastname": request.POST.get('lastname'),
+            "first_name": request.POST.get('first_name'),
+            "last_name": request.POST.get('last_name'),
             "email": request.POST.get('email'),
             "password": request.POST.get('password'),
         }
