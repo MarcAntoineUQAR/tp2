@@ -5,6 +5,43 @@
 {% block content %}
     <div class="m-3">
         <h1>Hello {{ username }}!</h1>
+        <p>Code de retour:</p>
+        <p>Clients:
+            {% if client_data.status == 200 %}
+                <span class="badge bg-success">Success ({{ client_data.status }})</span>
+            {% else %}
+                <span class="badge bg-danger">Failure ({{ client_data.status }})</span>
+            {% endif %}
+        </p>
+        <p>Mécaniciens:
+            {% if mecano_data.status == 200 %}
+                <span class="badge bg-success">Success ({{ mecano_data.status }})</span>
+            {% else %}
+                <span class="badge bg-danger">Failure ({{ mecano_data.status }})</span>
+            {% endif %}
+        </p>
+        <p>Rendez-vous:
+            {% if appointment_data.status == 200 %}
+                <span class="badge bg-success">Success ({{ appointment_data.status }})</span>
+            {% else %}
+                <span class="badge bg-danger">Failure ({{ appointment_data.status }})</span>
+            {% endif %}
+        </p>
+        <p>Vehicules:
+            {% if vehicle_data.status == 200 %}
+                <span class="badge bg-success">Success ({{ vehicle_data.status }})</span>
+            {% else %}
+                <span class="badge bg-danger">Failure ({{ vehicle_data.status }})</span>
+            {% endif %}
+        </p>
+        <p>Factures:
+            {% if bill_data.status == 200 %}
+                <span class="badge bg-success">Success ({{ bill_data.status }})</span>
+            {% else %}
+                <span class="badge bg-danger">Failure ({{ bill_data.status }})</span>
+            {% endif %}
+        </p>
+
 
         <p>Voici plusieurs informations possibles sur le site</p>
         <div class="row">
@@ -14,9 +51,9 @@
                         Nombre d'Utilisateurs
                     </div>
                     <div class="card-body">
-                        <p>Users: <strong>___</strong></p>
-                        <p>Clients: <strong>___</strong></p>
-                        <p>Mécaniciens: <strong>___</strong></p>
+                        <p>Users: <strong>{{ user_count }}</strong></p>
+                        <p>Clients: <strong>{{ client_data.count }}</strong></p>
+                        <p>Mécaniciens: <strong>{{ mecano_data.count }}</strong></p>
                     </div>
                 </div>
             </div>
@@ -27,10 +64,9 @@
                         Nombre de Rendez-vous
                     </div>
                     <div class="card-body">
-                        <p>Rendez-vous: <strong>___</strong></p>
-                        <p>Acceptés: <strong>___</strong></p>
-                        <p>Refusé: <strong>___</strong></p>
-                        <p>En attente: <strong>___</strong></p>
+                        <p>Rendez-vous: <strong>{{ appointment_data.count }}</strong></p>
+                        <p>Acceptés: <strong>{{ appointment_data.accepted_appointment_count }}</strong></p>
+                        <p>Refusé: <strong>{{ appointment_data.refused_appointment_count }}</strong></p>
                     </div>
                 </div>
             </div>
@@ -43,7 +79,7 @@
                         Nombre de Véhicules
                     </div>
                     <div class="card-body">
-                        <p>Véhicules: <strong>___</strong></p>
+                        <p>Véhicules: <strong>{{ vehicle_data.count }}</strong></p>
                     </div>
                 </div>
             </div>
@@ -54,13 +90,12 @@
                         Nombre de Paiements
                     </div>
                     <div class="card-body">
-                        <p>Paiements: <strong>___</strong></p>
-                        <p>Payés: <strong>___</strong></p>
-                        <p>Non-Payés: <strong>___</strong></p>
+                        <p>Paiements: <strong>{{ bill_data.count }}</strong></p>
+                        <p>Payés: <strong>{{ bill_data.paid_bill_count }}</strong></p>
+                        <p>Non-Payés: <strong>{{ bill_data.unpaid_bill_count }}</strong></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
