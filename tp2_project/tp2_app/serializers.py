@@ -19,7 +19,7 @@ class VehicleSerializer(serializers.ModelSerializer):
     client = serializers.StringRelatedField(read_only=True)
     
     def validate_year(self, value):
-        if value < 1886 or value > datetime.now().year:
+        if value < 1000 or value > datetime.now().year:
             raise serializers.ValidationError("L'année doit être comprise entre 1886 et l'année actuelle.")
         return value
 

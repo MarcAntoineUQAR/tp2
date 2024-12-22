@@ -1,9 +1,12 @@
-from django.urls import path
+from django.http import HttpResponseRedirect
+from django.urls import path, re_path, reverse
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views.home_views import home
-from .views.login import login
+from .views.home_views import home, lobby
+from .views.login_views import login
+from .views.register_views import register
+from .views.statistic_views import statistics
 from .views.client_views import ClientList, ClientCreate, ClientDetail
 from .views.mechanic_views import MechanicList, MechanicCreate, MechanicDetail
 from .views.vehicle_views import VehicleList, VehicleCreate, VehicleDetail
@@ -20,8 +23,13 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('', lobby, name="home"),
+    path('lobby/', lobby, name="lobby"),
+
     path('login/',login, name="login"),
+    path('register/', register, name='register'),
+
+    path('statistics/',statistics, name="statistics"),
 
     # Swagger path
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
@@ -50,4 +58,5 @@ urlpatterns = [
     path('appointments/', AppointmentList.as_view(), name='appointment-list'),
     path('appointments/<int:pk>/', AppointmentDetail.as_view(), name='appointment-detail'),
     path('appointments/create/', AppointmentCreate.as_view(), name='appointment-create'),
+    re_path(r'^.*$', lambda request: HttpResponseRedirect(reverse('lobby'))),
 ]

@@ -9,9 +9,10 @@ from ..serializers import ClientSerializer
 class ClientDetail(APIView):
     @swagger_auto_schema(
         tags=['Client'],
-        responses={200: ClientSerializer},
-        operation_summary="Get Client By ID",
-        )
+        responses={200: ClientSerializer, 404: "Client not found"},
+        operation_summary="Get client details",
+        operation_description="Fetch client details by ID. Returns 404 if client not found."
+    )
     def get(self, request, pk, format=None):
         try:
             client = Client.objects.get(pk=pk)
@@ -23,9 +24,10 @@ class ClientDetail(APIView):
     @swagger_auto_schema(
         tags=['Client'],
         request_body=ClientSerializer,
-        responses={200: ClientSerializer},
-        operation_summary="Update Client",
-        )
+        responses={200: ClientSerializer, 404: "Client not found", 400: "Invalid data"},
+        operation_summary="Update client",
+        operation_description="Update an existing client. Returns 404 if client not found."
+    )
     def put(self, request, pk, format=None):
         try:
             client = Client.objects.get(pk=pk)
@@ -40,9 +42,10 @@ class ClientDetail(APIView):
     @swagger_auto_schema(
         tags=['Client'],
         request_body=ClientSerializer,
-        responses={200: ClientSerializer},
-        operation_summary="Partial Update Client",
-        )
+        responses={200: ClientSerializer, 404: "Client not found", 400: "Invalid data"},
+        operation_summary="Partial update client",
+        operation_description="Partially update client details. Returns 404 if client not found."
+    )
     def patch(self, request, pk, format=None):
         try:
             client = Client.objects.get(pk=pk)
@@ -56,9 +59,10 @@ class ClientDetail(APIView):
 
     @swagger_auto_schema(
         tags=['Client'], 
-        responses={204: 'No Content'},
-        operation_summary="Delete Client",
-        )
+        responses={204: "No Content", 404: "Client not found"},
+        operation_summary="Delete client",
+        operation_description="Delete a client by ID. Returns 404 if client not found."
+    )
     def delete(self, request, pk, format=None):
         try:
             client = Client.objects.get(pk=pk)
@@ -67,12 +71,14 @@ class ClientDetail(APIView):
         client.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class ClientCreate(APIView):
     @swagger_auto_schema(
         tags=['Client'],
         request_body=ClientSerializer,
         responses={201: ClientSerializer, 400: "Invalid data"},
-        operation_summary="Create Client",
+        operation_summary="Create a new client",
+        operation_description="Create a new client with required data."
     )
     def post(self, request, format=None):
         data = request.data
@@ -84,12 +90,14 @@ class ClientCreate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ClientList(APIView):
     @swagger_auto_schema(
         tags=['Client'], 
         responses={200: ClientSerializer(many=True)},
-        operation_summary="Get All Clients",
-        )
+        operation_summary="Get all clients",
+        operation_description="Retrieve a list of all clients."
+    )
     def get(self, request, format=None):
         clients = Client.objects.all()
         serializer = ClientSerializer(clients, many=True)
