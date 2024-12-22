@@ -5,6 +5,7 @@ from drf_yasg import openapi
 
 from .views.home_views import home, lobby
 from .views.login_views import login
+from .views.register_views import register
 from .views.statistic_views import statistics
 from .views.client_views import ClientList, ClientCreate, ClientDetail
 from .views.mechanic_views import MechanicList, MechanicCreate, MechanicDetail
@@ -26,6 +27,7 @@ urlpatterns = [
     path('lobby/', lobby, name="lobby"),
 
     path('login/',login, name="login"),
+    path('register/', register, name='register'),
 
     path('statistics/',statistics, name="statistics"),
 
