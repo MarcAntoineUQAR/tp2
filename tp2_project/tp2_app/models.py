@@ -29,7 +29,7 @@ class Vehicle(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="vehicules")
     make = models.CharField(max_length=50)
     model = models.CharField(max_length=50)
-    year = models.IntegerField()
+    year = models.PositiveSmallIntegerField()
     color = models.CharField(max_length=20)
 
     def __str__(self):
