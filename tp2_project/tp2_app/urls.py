@@ -3,7 +3,7 @@ from django.urls import path, re_path, reverse
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views.home_views import home, lobby
+from .views.home_views import lobby
 from .views.login_views import login
 from .views.register_views import register
 from .views.statistic_views import statistics

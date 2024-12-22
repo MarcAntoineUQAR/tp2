@@ -3,6 +3,7 @@ from django.urls import reverse
 import requests
 from rest_framework import status
 
+
 def register(request):
     if request.method == 'POST':
         role = request.POST.get('role')
@@ -17,20 +18,27 @@ def register(request):
         if role == 'client':
             data["phone_number"] = request.POST.get('phone_number')
             data["address"] = request.POST.get('address')
-            url = reverse('client-create')
+            url = request.build_absolute_uri(reverse('client-create'))
         else:
             data["salary"] = request.POST.get('salary', 0)
-            url = reverse('mechanic-create')
+            url = request.build_absolute_uri(reverse('mechanic-create'))
 
-        response = requests.post(request.build_absolute_uri(url), json=data)
-        
-        if response.status_code == status.HTTP_201_CREATED:
-            return redirect('login')
-        else:
+        try:
+            response = requests.post(url, json=data)
+            if response.status_code == status.HTTP_201_CREATED:
+                return redirect('login')
+            else:
+                context = {
+                    'error': response.json() if response.headers.get(
+                        'Content-Type') == 'application/json' else 'Unknown error',
+                    'form_data': request.POST
+                }
+                return render(request, 'register.html', context)
+        except requests.RequestException as e:
             context = {
-                'error': response.json(),
+                'error': str(e),
                 'form_data': request.POST
             }
             return render(request, 'register.html', context)
-    
+
     return render(request, 'register.html')

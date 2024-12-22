@@ -43,7 +43,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Appointment
-        fields = ['id', 'client', 'client_id', 'mechanic', 'mechanic_id', 'vehicle', 'vehicle_id', 'date', 'description']
+        fields = ['id', 'client', 'client_id', 'mechanic', 'mechanic_id', 'vehicle', 'vehicle_id', 'date', 'description', 'is_accepted']
 
 class BillSerializer(serializers.ModelSerializer):
     client_id = serializers.PrimaryKeyRelatedField(
