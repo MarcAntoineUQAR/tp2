@@ -42,9 +42,10 @@ class Appointment(models.Model):
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, related_name="appointment")
     date = models.DateTimeField()
     description = models.TextField()
+    is_accepted = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"RDV: {self.client.username} avec {self.mecanicien.username} - {self.date}"
+        return f"RDV: {self.client.username} avec {self.mechanic.username} - {self.date}"
   
 class Bill(models.Model):
     id = models.AutoField(primary_key=True)
