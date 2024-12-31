@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand me-4" href="{% url 'home' %}">
-            <img src="{% static 'logo.png' %}" alt="Logo" style="height: 40px;">
+            <img src="{% static 'logo.jpg' %}" alt="Logo" style="height: 50px;">
         </a>
 
         <div class="d-flex flex-grow-1">
@@ -13,6 +13,6 @@
             <a class="nav-link" href="{% url 'statistics' %}">Statistic</a>
         </div>
 
-        <a class="nav-link" href="#">Logout</a>
+        <a class="nav-link" href="{% url 'login' %}">Logout</a>
     </div>
 </nav>

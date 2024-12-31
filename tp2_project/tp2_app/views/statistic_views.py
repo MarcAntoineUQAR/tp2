@@ -47,7 +47,7 @@ def statistics(request):
         'vehicle_data' : vehicle_data,
         'bill_data' : bill_data,
         'user_count' : user_count,
-        'username': 'xX_Gooner69_Xx',
+        'username': 'MarcAntoine123',
     }
     return render(request, 'statistic.html', context)
 
